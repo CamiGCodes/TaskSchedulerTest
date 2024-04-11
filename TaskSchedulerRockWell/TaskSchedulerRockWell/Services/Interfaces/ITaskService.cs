@@ -4,6 +4,6 @@ namespace TaskSchedulerRockWell.Services.Interfaces
 {
     public interface ITaskService
     {
-        Task<Dictionary<string, string>> ScheduleTask(TaskModel task);
+        Task ScheduleTask(TaskModel task);
     }
 }

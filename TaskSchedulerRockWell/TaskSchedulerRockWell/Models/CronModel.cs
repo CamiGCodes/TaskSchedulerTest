@@ -8,5 +8,4 @@
         public string Month { get; set; }
         public string DayOfWeek { get; set; }
     }
-
 }

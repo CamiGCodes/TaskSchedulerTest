@@ -1,8 +1,5 @@
 ﻿using Hangfire;
-using Microsoft.IdentityModel.Tokens;
 using System.Net.NetworkInformation;
-using System.Reflection.PortableExecutable;
-using System.Threading.Tasks;
 using TaskSchedulerRockWell.Models;
 using TaskSchedulerRockWell.Services.Interfaces;
 
@@ -13,30 +10,50 @@ namespace TaskSchedulerRockWell.Services
     {
         private readonly ILogger<TaskService> _logger;
         private Dictionary<string, string> _headers;
-
-        public TaskService(ILogger<TaskService> logger)
+        private IRecurringJobManager _client;
+        public TaskService(ILogger<TaskService> logger, IRecurringJobManager client)
         {
             _logger = logger;
+            _client = client;
         }
-        
+
         private string GenerateCronExpression(CronModel cron)
         {
             return $"{cron.Minutes} {cron.Hours} {cron.DayOfMonth} {cron.Month} {cron.DayOfWeek}";
         }
 
-        public async Task<Dictionary<string, string>> ScheduleTask(TaskModel task)
+        public async Task ScheduleTask(TaskModel task)
         {
             try
             {
                 string cronExpression = GenerateCronExpression(task.Cron);
 
-                ValidateUrl(task.Url);
+                _client.AddOrUpdate(
+                $"ScrapeHeaders_{task.Id}",
+                () => ExecuteScheduledTask(task.Url),
+                cronExpression);
+            }
 
-                PingReply pingReply = await PingUrl(task.Url);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An unexpected error occurred: {ex.Message}");
+                throw;
+            }
+        }
 
-                Uri validUri = ParseUrl(task.Url);
+        public async Task<Dictionary<string, string>> ExecuteScheduledTask(string url)
+        {
+            try
+            {
+                ValidateUrl(url);
 
-                return await ScrapeHeaders(validUri);
+                PingReply pingReply = await PingUrl(url);
+
+                Uri validUri = ParseUrl(url);
+
+                _headers = await ScrapeHeaders(validUri);
+
+                return _headers;
             }
             catch (Exception ex)
             {
@@ -44,6 +61,7 @@ namespace TaskSchedulerRockWell.Services
                 throw; // Rethrow the original exception
             }
         }
+
 
         private void ValidateUrl(string url)
         {

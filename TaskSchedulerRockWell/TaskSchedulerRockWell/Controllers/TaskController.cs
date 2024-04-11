@@ -1,5 +1,4 @@
-﻿using Hangfire;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TaskSchedulerRockWell.Models;
 using TaskSchedulerRockWell.Services.Interfaces;
 
@@ -19,12 +18,10 @@ namespace TaskSchedulerRockWell.Controllers
         [HttpPost("scheduleTask")]
         public async Task<IActionResult> ScheduleTask([FromBody] TaskModel task)
         {
-            //RecurringJob.AddOrUpdate(() => ScheduleTask(task.Url), cronExpression); // Utiliza RecurringJob.AddOrUpdate con la expresión cron
-
             try
             {
-                Dictionary<string, string> headers = await _taskService.ScheduleTask(task);
-                return Ok(headers);
+                await _taskService.ScheduleTask(task);
+                return Ok();
             }
             catch (Exception ex)
             {
