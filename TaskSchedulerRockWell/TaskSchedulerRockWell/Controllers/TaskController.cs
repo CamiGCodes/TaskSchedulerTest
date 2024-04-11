@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using TaskSchedulerRockWell.Models;
 using TaskSchedulerRockWell.Services.Interfaces;
 
@@ -39,7 +40,7 @@ namespace TaskSchedulerRockWell.Controllers
                 return BadRequest(ModelState);
             }
                 await _taskService.ScheduleTask(task);
-                return Ok();
+                return Ok(new { message = "Task scheduled successfully"});
             }
             catch (Exception ex)
             {

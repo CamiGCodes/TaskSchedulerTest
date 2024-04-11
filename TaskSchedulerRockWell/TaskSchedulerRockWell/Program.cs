@@ -18,6 +18,14 @@ builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer("name=HangfireConnection"));
 var connectionString = builder.Configuration.GetConnectionString("HangfireConnection");
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowOrigin",
+        builder => builder.WithOrigins("http://localhost:4200")
+        .AllowAnyHeader()
+        .AllowAnyMethod());
+});
+
 builder.Services.AddHangfire(configuration => configuration
         .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
         .UseSimpleAssemblyNameTypeSerializer()
@@ -50,5 +58,7 @@ app.UseAuthorization();
 app.UseHangfireDashboard();
 
 app.MapControllers();
+
+app.UseCors("AllowOrigin");
 
 app.Run();

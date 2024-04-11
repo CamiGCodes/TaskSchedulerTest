@@ -45,7 +45,7 @@ namespace TaskSchedulerRockWell.Services
                 string cronExpression = GenerateCronExpression(task.Cron);
 
                 _client.AddOrUpdate(
-                $"ScrapeHeaders_{task.Id}",
+                $"ScrapeHeaders",
                 () => ExecuteScheduledTask(task.Url),
                 cronExpression);
             }
