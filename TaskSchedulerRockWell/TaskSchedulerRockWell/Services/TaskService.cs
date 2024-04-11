@@ -5,7 +5,9 @@ using TaskSchedulerRockWell.Services.Interfaces;
 
 namespace TaskSchedulerRockWell.Services
 {
-    //TODO: Summaries
+    /// <summary>
+    /// Service class responsible for scheduling and executing tasks.
+    /// </summary>
     public class TaskService : ITaskService
     {
         private readonly ILogger<TaskService> _logger;
@@ -16,12 +18,26 @@ namespace TaskSchedulerRockWell.Services
             _logger = logger;
             _client = client;
         }
+        #region Cron Expression Generation
 
+        /// <summary>
+        /// Generates a cron expression string based on the provided CronModel object.
+        /// </summary>
+        /// <param name="cron">The CronModel object containing scheduling information.</param>
+        /// <returns>A string representing the cron expression.</returns>
         private string GenerateCronExpression(CronModel cron)
         {
             return $"{cron.Minutes} {cron.Hours} {cron.DayOfMonth} {cron.Month} {cron.DayOfWeek}";
         }
+        #endregion
 
+        #region Task Scheduling
+
+        /// <summary>
+        /// Schedules a task to scrape headers from a specified URL at a recurring interval.
+        /// </summary>
+        /// <param name="task">The TaskModel object containing the URL and scheduling details.</param>
+        /// <returns>An asynchronous Task representing the scheduling operation.</returns>
         public async Task ScheduleTask(TaskModel task)
         {
             try
@@ -40,7 +56,14 @@ namespace TaskSchedulerRockWell.Services
                 throw;
             }
         }
+        #endregion
 
+        #region Task Execution
+        /// <summary>
+        /// Executes the scheduled task to scrape headers from the provided URL.
+        /// </summary>
+        /// <param name="url">The URL of the website to scrape headers from.</param>
+        /// <returns>An asynchronous Task that returns a dictionary of scraped headers, or throws an exception if unsuccessful.</returns>
         public async Task<Dictionary<string, string>> ExecuteScheduledTask(string url)
         {
             try
@@ -61,8 +84,9 @@ namespace TaskSchedulerRockWell.Services
                 throw; // Rethrow the original exception
             }
         }
+        #endregion
 
-
+        #region Helper Methods
         private void ValidateUrl(string url)
         {
             if (string.IsNullOrEmpty(url))
@@ -110,5 +134,6 @@ namespace TaskSchedulerRockWell.Services
                 return headers;
             }
         }
+        #endregion
     }
 }
