@@ -1,65 +1,96 @@
-﻿using System.Net.NetworkInformation;
+﻿using Hangfire;
+using Microsoft.IdentityModel.Tokens;
+using System.Net.NetworkInformation;
+using System.Reflection.PortableExecutable;
+using System.Threading.Tasks;
 using TaskSchedulerRockWell.Models;
 using TaskSchedulerRockWell.Services.Interfaces;
 
 namespace TaskSchedulerRockWell.Services
 {
     //TODO: Summaries
-    //TODO: Validar URI válida y cron válido.
     public class TaskService : ITaskService
     {
         private readonly ILogger<TaskService> _logger;
+        private Dictionary<string, string> _headers;
 
         public TaskService(ILogger<TaskService> logger)
         {
             _logger = logger;
+        }
+        
+        private string GenerateCronExpression(CronModel cron)
+        {
+            return $"{cron.Minutes} {cron.Hours} {cron.DayOfMonth} {cron.Month} {cron.DayOfWeek}";
         }
 
         public async Task<Dictionary<string, string>> ScheduleTask(TaskModel task)
         {
             try
             {
-                //Ping website
-                Ping ping = new Ping();
-                PingReply reply = await ping.SendPingAsync(task.Url);
+                string cronExpression = GenerateCronExpression(task.Cron);
 
-                if (reply.Status == IPStatus.Success)
-                {
-                    string absoluteUrl = $"https://{task.Url}";
+                ValidateUrl(task.Url);
 
-                    _logger.LogInformation($"Ping to {absoluteUrl} succesful. Response time: {reply.RoundtripTime} ms");
+                PingReply pingReply = await PingUrl(task.Url);
 
-                    
-                    //Scraping headers
-                    using (HttpClient client = new HttpClient())
-                    {
-                        HttpResponseMessage response = await client.GetAsync(absoluteUrl);
-                        response.EnsureSuccessStatusCode();
+                Uri validUri = ParseUrl(task.Url);
 
-                        Dictionary<string, string> headers = new Dictionary<string, string>();
-
-                        foreach (var header in response.Headers)
-                        {
-                            headers.Add(header.Key, string.Join(",", header.Value));
-                        }
-
-                        return headers;
-                    }
-                }
-                else
-                {
-                    Console.WriteLine($"Ping to {task.Url} has failed. Status: {reply.Status}");
-                    return new Dictionary<string, string>();
-
-                }
+                return await ScrapeHeaders(validUri);
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"Error executing task: {ex.Message}");
-                return null;
-                
+                _logger.LogError(ex, $"An unexpected error occurred: {ex.Message}");
+                throw; // Rethrow the original exception
             }
+        }
 
+        private void ValidateUrl(string url)
+        {
+            if (string.IsNullOrEmpty(url))
+            {
+                _logger.LogError("The URL cannot be empty.");
+                throw new ArgumentException("The URL cannot be empty.");
+            }
+        }
+
+        private async Task<PingReply> PingUrl(string url)
+        {
+            Ping ping = new Ping();
+            return await ping.SendPingAsync(url);
+        }
+
+        private Uri ParseUrl(string url)
+        {
+            if (Uri.TryCreate($"https://{url}", UriKind.Absolute, out Uri uri))
+            {
+                _logger.LogInformation($"Valid URI format: {uri}");
+                return uri;
+            }
+            else
+            {
+                _logger.LogError($"Invalid URI format: {url}");
+                throw new ArgumentException("Invalid URI format. Please provide a valid URL.");
+            }
+        }
+
+        private async Task<Dictionary<string, string>> ScrapeHeaders(Uri uri)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                HttpResponseMessage response = await client.GetAsync(uri);
+                response.EnsureSuccessStatusCode();
+
+                Dictionary<string, string> headers = new Dictionary<string, string>();
+
+                // Iterate over the response headers and add them to the dictionary
+                foreach (var header in response.Headers)
+                {
+                    headers.Add(header.Key, string.Join(",", header.Value));
+                }
+
+                return headers;
+            }
         }
     }
 }
