@@ -1,0 +1,12 @@
+<h1>Task Scheduler</h1>
+<form #taskSchedulerForm="ngForm" (ngSubmit)="onSubmit(taskSchedulerForm.value)" class="form-container">
+  <div class="form-group">
+    <label for="cronExpression">Cron Expression:</label>
+    <input type="text" id="cronExpression" name="cronExpression" ngModel placeholder="Cron Expression" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="url">URL:</label>
+    <input type="url" id="url" name="url" ngModel placeholder="Url" class="form-control">
+  </div>
+  <button type="submit" class="btn-submit">Schedule Task</button>
+</form>
