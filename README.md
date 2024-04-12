@@ -210,7 +210,24 @@ Note: important to configure the correct port of your localhost on the backend:
 - In hangfire.service.ts for the GET
 
 **************************************************
+## Contributions
 
+Welcome to contribute to this project! Here are some guidelines for effective contribution:
+
+1. **Reporting issues:** If you encounter a problem or have an improvement idea, please open an issue in the repository.
+2. **Making pull requests:** If you wish to contribute code, make sure to follow these guidelines:
+   - Create a branch (`git checkout -b feature/new-feature`) for your contribution.
+   - Follow the project's style guidelines.
+   - Make descriptive and well-documented commits.
+   - Perform unit tests if necessary.
+   - Submit your pull request to the main branch.
+3. **Respectful collaboration:** Respect the opinions and contributions of other collaborators. Constructive dialogue and positive collaboration are encouraged.
+4. **Documentation:** Whenever possible, provide clear and concise documentation for any changes you make.
+5. **Acknowledgment:** We appreciate all contributors for their time and effort in making this project better.
+
+We look forward to your contributions!
+
+*********************************
 **The project uses the following technologies:**
 - C#: 56.3%
 - TypeScript: 26.7%
