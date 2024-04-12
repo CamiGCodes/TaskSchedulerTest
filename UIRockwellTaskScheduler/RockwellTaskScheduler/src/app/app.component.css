@@ -1,6 +1,24 @@
+body, html {
+  height: 100%; /* Ensures that the body and html occupy full height */
+  margin: 0; /* Removes default margin */
+  padding: 0; /* Removes default padding */
+  background-color: #DCD9D9; /* Background color for body and html */
+}
+
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box; /* Includes padding in total width */
+}
+
 .custom-background {
   background-color: #DCD9D9;
   padding: 20px;
+}
+
+.container .table.custom-table {
+  background-color: #DCD9D9;
 }
 
 .white-text {
@@ -8,10 +26,49 @@
 }
 
 .border-color-purple {
-  border-color: #7B4CE5 !important; /* Usa !important para asegurar que el estilo se aplique */
+  border-color: #7B4CE5 !important; /* Use !important to ensure style application */
 }
 
 .btn-custom {
   background-color: #231444;
   color: #ffffff;
+}
+
+.container {
+  padding: 2rem; /* Using rem for padding */
+}
+
+.form-label {
+  font-size: 1.2rem; /* Relative font size */
+}
+
+.form-control {
+  width: 100%; /* Input width 100% of container */
+}
+
+
+/* Base styles */
+.container {
+  max-width: 1200px; /* Maximum container width */
+  margin: 0 auto; /* Center container horizontally */
+}
+
+/* Styles for small screens (up to 768px) */
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 1rem; /* Reduce padding on small screens */
+  }
+
+  .form-label {
+    font-size: 1rem; /* Smaller font size on small screens */
+  }
+}
+
+.form-group {
+  display: flex;
+  justify-content: center; /* Center elements horizontally */
+}
+
+.btn-custom {
+  margin-top: 1rem; /* Space between form and button */
 }

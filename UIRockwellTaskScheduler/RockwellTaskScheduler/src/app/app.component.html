@@ -2,12 +2,29 @@
 <html lang="en">
 <head>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="app.component.css"> <!-- Vincula el archivo CSS externo -->
+  <link rel="stylesheet" href="app.component.css"> <!-- Link external CSS file -->
+  <style>
+    .custom-table {
+      max-height: 400px; /* Altura máxima de la tabla */
+      overflow-y: auto; /* Habilitar el scroll vertical */
+    }
+    .table {
+      border: 1px solid #231444; /* Borde de color morado alrededor de la tabla */
+      border-collapse: collapse; /* Colapsar bordes de celdas */
+      width: 100%; /* Ancho de la tabla */
+    }
+    .table th,
+    .table td {
+      border: 1px solid #231444; /* Borde de color morado para las celdas */
+      padding: 8px; /* Espaciado interno de las celdas */
+      text-align: left; /* Alinear texto a la izquierda en las celdas */
+    }
+  </style>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Task Scheduler</title>
 </head>
-<body>
+<body class="custom-background">
   <div class="container custom-background">
     <h1 class="mt-5 white-text">Task Scheduler</h1>
     <form #taskSchedulerForm="ngForm" (ngSubmit)="onSubmit(taskSchedulerForm.value)" class="mt-4">
@@ -24,28 +41,30 @@
 
     <h1 class="mt-5 white-text">Scheduled Tasks</h1>
     <button (click)="loadHangfireStates()" class="btn btn-custom mt-4">Load Scheduled Tasks</button>
-    <table *ngIf="hangfireStates.length > 0" class="table mt-3">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Job ID</th>
-          <th>Name</th>
-          <th>Reason</th>
-          <th>Created At</th>
-          <th>Data</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let state of hangfireStates">
-          <td>{{ state.id }}</td>
-          <td>{{ state.jobId }}</td>
-          <td>{{ state.name }}</td>
-          <td>{{ state.reason }}</td>
-          <td>{{ state.createdAt }}</td>
-          <td>{{ state.data }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-responsive custom-table"> <!-- Agregar la clase table-responsive y custom-table -->
+      <table *ngIf="hangfireStates.length > 0" class="table mt-3">
+        <thead>
+          <tr>
+            <th style="color: #231444;">ID</th>
+            <th style="color: #231444;">Job ID</th>
+            <th style="color: #231444;">Name</th>
+            <th style="color: #231444;">Reason</th>
+            <th style="color: #231444;">Created At</th>
+            <th style="color: #231444;">Headers</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let state of hangfireStates">
+            <td style="color: #231444;">{{ state.id }}</td>
+            <td style="color: #231444;">{{ state.jobId }}</td>
+            <td style="color: #231444;">{{ state.name }}</td>
+            <td style="color: #231444;">{{ state.reason }}</td>
+            <td style="color: #231444;">{{ state.createdAt }}</td>
+            <td style="color: #231444;">{{ state.data }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </body>
 </html>
