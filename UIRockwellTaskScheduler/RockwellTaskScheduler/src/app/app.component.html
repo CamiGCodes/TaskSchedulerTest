@@ -10,3 +10,28 @@
   </div>
   <button type="submit" class="btn-submit">Schedule Task</button>
 </form>
+
+<h1>Scheduled Tasks</h1>
+<button (click)="loadHangfireStates()" class="btn-load">Load Hangfire States</button>
+<table *ngIf="hangfireStates.length > 0" class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Job ID</th>
+      <th>Name</th>
+      <th>Reason</th>
+      <th>Created At</th>
+      <th>Data</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let state of hangfireStates">
+      <td>{{ state.id }}</td>
+      <td>{{ state.jobId }}</td>
+      <td>{{ state.name }}</td>
+      <td>{{ state.reason }}</td>
+      <td>{{ state.createdAt }}</td>
+      <td>{{ state.data }}</td>
+    </tr>
+  </tbody>
+</table>

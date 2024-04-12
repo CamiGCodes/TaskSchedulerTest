@@ -1,14 +1,17 @@
 import { Component } from '@angular/core';
-import {HttpClient } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http';
+import { HangfireService } from './hangfire.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private http: HttpClient){
+  hangfireStates: any[] = [];
 
-  }
+  constructor(private http: HttpClient, private hangfireService: HangfireService) {}
+
   onSubmit(data: any) {
     const transformedData = {
       cron: {
@@ -25,5 +28,11 @@ export class AppComponent {
       .subscribe((result) => {
         console.warn('result', result);
       });
+  }
+
+  loadHangfireStates() {
+    this.hangfireService.getHangfireStates().subscribe((states: any[]) => {
+      this.hangfireStates = states;
+    });
   }
 }
