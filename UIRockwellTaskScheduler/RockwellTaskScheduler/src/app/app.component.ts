@@ -1,16 +1,32 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HangfireService } from './hangfire.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'; // Importar FormBuilder y Validators
+import { cronExpressionValidator } from './validators'; // Importar el validador de expresión Cron
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  taskSchedulerForm!: FormGroup; // Indicar que la variable puede ser nula
+
   hangfireStates: any[] = [];
 
-  constructor(private http: HttpClient, private hangfireService: HangfireService) {}
+  constructor(private http: HttpClient, private hangfireService: HangfireService, private formBuilder: FormBuilder) {
+    this.taskSchedulerForm = this.formBuilder.group({
+      cronExpression: ['', [Validators.required, cronExpressionValidator()]], // Validación personalizada para la expresión Cron
+      url: ['', [Validators.required, Validators.pattern('https?://.+')]], // Validación de URL utilizando Validators.pattern
+    });
+  }
+  ngOnInit(): void {
+    // Inicializar el formulario con las validaciones
+    this.taskSchedulerForm = this.formBuilder.group({
+      cronExpression: ['', [Validators.required, cronExpressionValidator()]], // Validación personalizada para la expresión Cron
+      url: ['', [Validators.required, Validators.pattern('https?://.+')]], // Validación de URL utilizando Validators.pattern
+    });
+  }
 
   onSubmit(data: any) {
     const transformedData = {

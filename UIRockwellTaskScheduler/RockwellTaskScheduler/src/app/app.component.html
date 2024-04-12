@@ -1,20 +1,32 @@
 <div class="container custom-background">
   <h1 class="mt-5 white-text">Task Scheduler</h1>
-  <form #taskSchedulerForm="ngForm" (ngSubmit)="onSubmit(taskSchedulerForm.value)" class="mt-4">
+  <form *ngIf="taskSchedulerForm" [formGroup]="taskSchedulerForm" (ngSubmit)="onSubmit(taskSchedulerForm.value)" class="mt-4">
     <div class="mb-3">
       <label for="cronExpression" class="form-label white-text">Cron Expression:</label>
-      <input type="text" id="cronExpression" name="cronExpression" ngModel placeholder="Cron Expression" class="form-control border-color-purple">
+      <input type="text" id="cronExpression" formControlName="cronExpression" placeholder="Cron Expression" class="form-control border-color-purple">
+      <div *ngIf="taskSchedulerForm.get('cronExpression')?.errors?.['required'] && taskSchedulerForm.get('cronExpression')?.touched" class="text-danger">
+        <span>Cron Expression is required.</span>
+      </div>
+      <div *ngIf="taskSchedulerForm.get('cronExpression')?.errors?.['invalidCronExpression'] && taskSchedulerForm.get('cronExpression')?.touched" class="text-danger">
+        <span>Invalid Cron Expression.</span>
+      </div>
     </div>
     <div class="mb-3">
       <label for="url" class="form-label white-text">URL:</label>
-      <input type="url" id="url" name="url" ngModel placeholder="URL" class="form-control border-color-purple">
+      <input type="url" id="url" formControlName="url" placeholder="URL" class="form-control border-color-purple">
+      <div *ngIf="taskSchedulerForm.get('url')?.errors?.['required'] && taskSchedulerForm.get('url')?.touched" class="text-danger">
+        <span>URL is required.</span>
+      </div>
+      <div *ngIf="taskSchedulerForm.get('url')?.errors?.['pattern'] && taskSchedulerForm.get('url')?.touched" class="text-danger">
+        <span>Invalid URL format.</span>
+      </div>
     </div>
-    <button type="submit" class="btn btn-custom">Schedule Task</button>
+    <button type="submit" [disabled]="taskSchedulerForm.invalid" class="btn btn-custom">Schedule Task</button>
   </form>
 
   <h1 class="mt-5 white-text">Scheduled Tasks</h1>
   <button (click)="loadHangfireStates()" class="btn btn-custom mt-4">Load Scheduled Tasks</button>
-  <div class="table-responsive custom-table" style="max-height: 400px; overflow-y: auto;"> <!-- Agregar el scroll vertical aquí -->
+  <div class="table-responsive custom-table" style="max-height: 400px; overflow-y: auto;">
     <table *ngIf="hangfireStates.length > 0" class="table mt-3 border-color-purple">
       <thead>
         <tr>

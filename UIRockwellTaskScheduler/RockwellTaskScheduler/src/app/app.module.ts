@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms'; // Importar ReactiveFormsModule
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {HttpClientModule} from '@angular/common/http'
-import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { HangfireService } from './hangfire.service';
 
 @NgModule({
@@ -15,7 +15,7 @@ import { HangfireService } from './hangfire.service';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    ReactiveFormsModule // Agregar ReactiveFormsModule a la lista de imports
   ],
   providers: [HangfireService],
   bootstrap: [AppComponent]
