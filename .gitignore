@@ -6,3 +6,5 @@
 /TaskSchedulerRockWell/TaskSchedulerRockWell/bin/Debug/net8.0
 /TaskSchedulerRockWell/TaskSchedulerRockWell/obj
 /TaskSchedulerRockWell/TaskSchedulerRockWell/TaskSchedulerRockWell.csproj.user
+/ClientApp/node_modules
+/ClientApp/dist
