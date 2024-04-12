@@ -2,15 +2,14 @@
 using TaskSchedulerRockWell.Models;
 using TaskSchedulerRockWell.Services.Interfaces;
 using TaskSchedulerRockWell.Utils;
-using TaskSchedulerRockWell.Utils.Interfaces;
 
 namespace TaskSchedulerRockWell.Services
 {
     public class HangFireStateService : IHangFireStateService
     {
-        private readonly IApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public HangFireStateService(IApplicationDbContext context)
+        public HangFireStateService(ApplicationDbContext context)
         {
             _context = context;
         }
