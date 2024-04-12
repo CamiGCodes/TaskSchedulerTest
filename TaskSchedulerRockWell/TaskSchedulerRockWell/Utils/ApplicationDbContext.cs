@@ -1,12 +1,12 @@
-﻿namespace TaskSchedulerRockWell.Utils
-{
-    using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using TaskSchedulerRockWell.Models;
 
-    /// <summary>
-    /// Entity Framework Core DbContext class for the application.
-    /// </summary>
+namespace TaskSchedulerRockWell.Utils
+{
     public class ApplicationDbContext : DbContext
     {
+        public DbSet<HangFireState> HangFireState { get; set; } // DbSet para HangFireState
+
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
         }

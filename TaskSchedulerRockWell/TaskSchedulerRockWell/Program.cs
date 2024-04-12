@@ -15,6 +15,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ITaskService, TaskService>();
+builder.Services.AddScoped<IHangFireStateService, HangFireStateService>();
+
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer("name=HangfireConnection"));
 var connectionString = builder.Configuration.GetConnectionString("HangfireConnection");
 
