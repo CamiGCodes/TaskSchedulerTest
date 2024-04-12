@@ -1,5 +1,3 @@
-[Translated from Spanish to English - www.onlinedoctranslator.com](https://www.onlinedoctranslator.com/en/?utm_source=onlinedoctranslator&utm_medium=pdf&utm_campaign=attribution)![](Aspose.Words.0fd24433-774f-423e-b109-71380a97f9cc.001.png)![](Aspose.Words.0fd24433-774f-423e-b109-71380a97f9cc.002.png)
-
 **Task Scheduler Project** :computer:	
 
 **Overview**
