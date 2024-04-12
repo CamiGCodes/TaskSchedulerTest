@@ -22,8 +22,8 @@ The Task Scheduler Project is a sophisticated task automation system designed to
 - Background Task Execution: Tasks are executed efficiently in the background using HangFire, ensuring minimal disruption to the user experience.
 - Data Storage: SQL Server managed through SQL Server Management Studio stores task-related data, providing a reliable and secure database solution.
 
-**Installation:
-**
+**Installation:**
+
 ● First, you need to download Visual Studio: https://
 
 [visualstudio.microsoft.com/es/vs/community/](https://visualstudio.microsoft.com/es/vs/community/)
@@ -55,8 +55,8 @@ HangFire library, it will need a database: [https://www.microsoft.com/es-co/sql-
 `
 **************************************************
 
-**USE FOR BACKEND:
-**
+**USE FOR BACKEND:**
+
 ● Once SQL Server and SSMS are installed, create a database for Hangfire and connect 
 
 to it using the Visual Studio appsettings.json file, for example:
@@ -97,15 +97,13 @@ C:\../TaskSchedulerTest\TaskSchedulerRockWell
 
 ********************************************
 
-**How to use APIs in .Net backend project?
-**
+**How to use APIs in .Net backend project?**
 
 You can run the application and by default the **Swagger** page will open. There you can select the API that you are going to call,
 
 You can also install **Postman**, and consume the APIs from this tool: https:// [www.postman.com/](https://www.postman.com/)
 
-**For the POST API:
-**
+**For the POST API:**
 **Payload:** [https://localhost:44390/api/tasks/scheduleTask ](https://localhost:44390/api/tasks/scheduleTask)
 
 **Body example:**
@@ -122,16 +120,13 @@ You can also install **Postman**, and consume the APIs from this tool: https:// 
 }`
 
 
-**For the GET API: 
-**
+**For the GET API:**
 **Payload:** <https://localhost:44390/api/tasks/getHangFireState>
-**No Body required
-**
+**No Body required**
 
 *********************************
 
-**HangFire Usage:
-**
+**HangFire Usage:**
 
 With the URL, using the specific port of your machine you can view the Hangfire administration panel:
 `https://localhost:portnumber/hangfire
@@ -154,8 +149,7 @@ When we access `https://localhost:portnumber/hangfire` in an application that us
 **Settings and Options: ** Depending on how the Hangfire panel is configured in the app, we can also find options to adjust job settings, view Hangfire server details, and other related settings.
 
 **********************************************************
-**To run the UI app:
-**
+**To run the UI app:**
 - Open Visual Studio Code as administrator.
 - Go to the File -> Open Folder option and go from the repository folder to the ..UIRockwellTaskScheduler\RockwellTaskScheduler folder
 
@@ -173,10 +167,8 @@ C:\..\TaskSchedulerRockWell\TaskSchedulerTest\UIRockwellTaskScheduler\Rockwe llT
 - Then, open the url in your preferred browser.
 
 ***************************************************
-**To submit data using the form make sure of the following: 
-**
-**Cron Expression:
-**
+**To submit data using the form make sure of the following:**
+**Cron Expression:**
 It should be of the format \* \* \* \* \*, where each \* represents a field for minutes, hours, day of month, month, and day of week respectively. 
 
 Keep in mind that there are 5 values separated by space.
@@ -187,8 +179,7 @@ Keep in mind that there are 5 values separated by space.
 - **Month:**From 1 to 12 or by name (for example, JAN, FEB, MAR).
 - **Weekday:**From 0 to 6 (0 is Sunday) or by name (for example, SUN, MON, TUE).
 
-**Valid examples:
-**
+**Valid examples:**
 1. * \* \* \* \* (each minute)
 
 2. 0 0 \* \* \* (at midnight every day)
@@ -199,8 +190,7 @@ Keep in mind that there are 5 values separated by space.
 
 5. 1 2 3 4 5 (does not follow the expected format) URL:
 
-- **It must be in the format of a valid URL, starting with http:// or https://. Valid examples:
-**
+- **It must be in the format of a valid URL, starting with http:// or https://. Valid examples:**
 1. "https://www.example.com"
 
 2. "http://localhost:3000"
@@ -221,15 +211,14 @@ Note: important to configure the correct port of your localhost on the backend:
 
 **************************************************
 
-**The project uses the following technologies:
-**
+**The project uses the following technologies:**
 - C#: 56.3%
 - TypeScript: 26.7%
 - HTML: 8.4%
 - CSS: 4.7%
 - JavaScript: 3.9%
-**
-Software Made by:**
-:woman_technologist: Maria Camila Chica Gómez. Net Developer and Systems Engineer
+**Software Made by:**
+
+:woman_technologist: **Maria Camila Chica Gómez**. Net Developer and Systems Engineer
 
 
