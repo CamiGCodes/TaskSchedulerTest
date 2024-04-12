@@ -25,7 +25,7 @@ namespace TaskSchedulerRockWell.Services
         /// </summary>
         /// <param name="cron">The CronModel object containing scheduling information.</param>
         /// <returns>A string representing the cron expression.</returns>
-        private string GenerateCronExpression(CronModel cron)
+        public string GenerateCronExpression(CronModel cron)
         {
             return $"{cron.Minutes} {cron.Hours} {cron.DayOfMonth} {cron.Month} {cron.DayOfWeek}";
         }
@@ -87,7 +87,7 @@ namespace TaskSchedulerRockWell.Services
         #endregion
 
         #region Helper Methods
-        private void ValidateUrl(string url)
+        public void ValidateUrl(string url)
         {
             if (string.IsNullOrEmpty(url))
             {
@@ -96,13 +96,13 @@ namespace TaskSchedulerRockWell.Services
             }
         }
 
-        private async Task<PingReply> PingUrl(string url)
+        public async Task<PingReply> PingUrl(string url)
         {
             Ping ping = new Ping();
             return await ping.SendPingAsync(url);
         }
 
-        private Uri ParseUrl(string url)
+        public Uri ParseUrl(string url)
         {
             if (Uri.TryCreate($"https://{url}", UriKind.Absolute, out Uri uri))
             {
@@ -116,7 +116,7 @@ namespace TaskSchedulerRockWell.Services
             }
         }
 
-        private async Task<Dictionary<string, string>> ScrapeHeaders(Uri uri)
+        public async Task<Dictionary<string, string>> ScrapeHeaders(Uri uri)
         {
             using (HttpClient client = new HttpClient())
             {
